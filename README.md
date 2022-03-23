@@ -1,5 +1,7 @@
 ![logo of libnapc](https://libnapc.nap.software/static/libnapc-github.png)
 
+[![Software Release](https://github.com/nap-software/libnapc/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/nap-software/libnapc/actions/workflows/release.yaml)
+
 # libnapc
 
 Thank you very much for checking out the documentation of [libnapc](https://libnapc.nap.software/)! 🎉
