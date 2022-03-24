@@ -7,8 +7,8 @@ on:
     branches: [ nightly ]
 
 env:
-  NAPCDOC_DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-  NAPCDOC_DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
+  LIBNAPC_DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+  LIBNAPC_DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
 
 jobs:
   build:
@@ -23,11 +23,12 @@ jobs:
          sudo apt-get update
          sudo apt install gcc make gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
          sudo apt install gcc-x86-64-linux-gnu
+         sudo apt install valgrind
 
     - name: Build source
       run: ./build.scripts/build.php
 
-    - name: Unit tests
+    - name: Run Unit Tests
       run: ./ci.run-tests.sh
 
     - name: Start local server

@@ -40,16 +40,40 @@ function build($config) {
 		fwrite(STDERR, "    $flag: ".($value ? "yes" : "no")."\n");
 	}
 
+	fwrite(STDERR, "Using build constants: \n");
+
+	foreach ($config["build_constants"] as $key => $value) {
+		fwrite(STDERR, "    $key: $value\n");
+	}
+
 	$cloneSourceTree = require __DIR__."/0.cloneSourceTree.php";
 
-	$cloneSourceTree(function($contents) use ($config) {
+	$cloneSourceTree(function($contents, $filename) use ($config) {
+		$license_header = "";
+
+		if (
+			substr($filename, -2, 2) === ".c" ||
+			substr($filename, -2, 2) === ".h" ||
+			substr($filename, -4, 4) === ".cpp" ||
+			substr($filename, -4, 4) === ".hpp"
+		) {
+			// add license header file
+			$license_header = "/*\n";
+
+			foreach (file("LICENSE") as $line) {
+				$license_header .= "* $line";
+			}
+
+			$license_header .= "*/\n";
+		}
+
 		foreach ($config["build_constants"] as $key => $value) {
 			$contents = str_replace(
 				"%BC_$key%", $value, $contents
 			);
 		}
 
-		return $contents;
+		return $license_header.$contents;
 	});
 
 	$createBootFile = require __DIR__."/1.createBootFile.php";
@@ -125,9 +149,15 @@ function build($config) {
 chdir(__DIR__."/../");
 
 $arduino_friendly_version = XPHPUtils::libnapc_getReleaseVersion();
+$arduino_friendly_name = "libnapc";
+$arduino_friendly_url = "https://libnapc.nap.software/";
 
-if (XPHPUtils::git_getCurrentBranch() !== "main") {
+$git_branch = XPHPUtils::git_getCurrentBranch();
+
+if ($git_branch !== "main") {
 	$arduino_friendly_version = "0.0.1";
+	$arduino_friendly_name = "libnapc-$git_branch";
+	$arduino_friendly_url = "https://nightly.libnapc.nap.software/";
 }
 
 XPHPUtils::shell_assertSystemCall("rm -rf build dist.tmp");
@@ -135,10 +165,12 @@ XPHPUtils::shell_assertSystemCall("rm -rf build dist.tmp");
 build([
 	"build_flags" => $build_flags,
 	"build_constants" => [
-		"GIT_BRANCH" => XPHPUtils::git_getCurrentBranch(),
+		"GIT_BRANCH" => $git_branch,
 		"GIT_HEAD_HASH" => XPHPUtils::git_getHEADHash(),
 		"RELEASE_VERSION" => XPHPUtils::libnapc_getReleaseVersion(),
+		"ARDUINO_FRIENDLY_NAME" => $arduino_friendly_name,
 		"ARDUINO_FRIENDLY_VERSION" => $arduino_friendly_version,
+		"ARDUINO_FRIENDLY_URL" => $arduino_friendly_url,
 		"BUILD_DATE" => BUILD_DATE
 	]
 ]);
