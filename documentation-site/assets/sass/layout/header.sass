@@ -1,0 +1,65 @@
+@use "../colors.sass"
+
+#napcdoc-layout-header
+	width: 100%
+	height: 100px
+	display: flex
+	align-items: center
+	position: fixed
+	top: 0
+	left: 0
+	background: #111119
+	pointer-events: none
+	z-index: 5
+
+	div.logo-wrapper
+		flex-shrink: 0
+		flex-grow: 0
+		width: 350px
+		display: flex
+		align-items: center
+
+		a.logo
+			padding: 0 30px
+			text-decoration: none
+
+
+	div.title-and-description-wrapper
+		display: flex
+		align-items: center
+
+		svg path
+			fill: white
+
+		div.title-and-description
+			display: flex
+			flex-direction: column
+			justify-content: center
+			margin-left: 15px
+
+			h1
+				font-size: 20px
+
+			span
+				font-size: 14px
+				margin-top: 6px
+				color: rgba(255, 255, 255, .4)
+
+			div.napcdoc-svg-image[data-definition-type="type"]
+				svg path
+					fill: colors.$napcdoc_type_primary_color
+
+			div.napcdoc-svg-image[data-definition-type="macro"]
+				svg path
+					fill: colors.$napcdoc_macro_primary_color
+
+			div.napcdoc-svg-image.second-icon
+				position: fixed
+				top: 52px
+				left: calc(350px + 14px)
+
+				&.deprecated svg path
+					fill: #ffb14a
+
+				&.hal svg path
+					fill: #5ed84b
