@@ -8,7 +8,7 @@ return function($keys) {
 
 		<div id="popover_padding_div"></div>
 
-		<div class="page-info">
+		<div class="page-info" style="display: none;">
 			<div class="version">
 				Version: <?php echo $build_constants["RELEASE_VERSION"]; ?>
 			</div>

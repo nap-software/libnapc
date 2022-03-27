@@ -36,7 +36,7 @@ return function($keys) {
 	<?php
 		if ($keys["_build_constants"]["GIT_BRANCH"] === "dev") {
 	?>
-		<div id="napcdoc-layout-debug-change-branch">
+		<div id="napcdoc-layout-debug-change-branch" style="display: none">
 			<form action="" method="POST">
 				<select name="debug-git-branch">
 					<?php
@@ -84,25 +84,91 @@ return function($keys) {
 		</a>
 	</div>
 
-	<div id="napcdoc-layout-logo">
-		<?php
-			$logo_src = "image/libnapc-logo-min.png";
+	<div id="napcdoc-frame">
 
-			if (in_array($git_branch, ["nightly", "dev"])) {
-				$logo_src = "image/libnapc-logo-".$git_branch."-min.png";
-			}
+		<div id="napcdoc-frame-content">
+			<div id="napcdoc-layout-navigation-header" style="position: absolute;">
+				<?php echo napcdoc::renderFile("navigation/header", $keys); ?>
+			</div>
 
-			echo napcdoc::createHTMLElement("a", [
-				"class" => "logo-wrapper",
-				"href" => napcdoc::documentation_fixLink("index.html")
-			], napcdoc::createHTMLElement("img", [
-				"src" => napcdoc::imageToBase64URI($logo_src),
-				"alt" => "NAPC Software Documentation Logo",
-				"height" => 50
-			]));
-		?>
+			<div id="napcdoc-layout-navigation" style="position: absolute;">
+				<?php echo napcdoc::renderFile("navigation/navigation", $keys); ?>
+			</div>
+
+		<div id="napcdoc-layout-logo">
+			<?php
+				$logo_src = "image/libnapc-logo-min.png";
+
+				if (in_array($git_branch, ["nightly", "dev"])) {
+					$logo_src = "image/libnapc-logo-".$git_branch."-min.png";
+				}
+
+				echo napcdoc::createHTMLElement("a", [
+					"class" => "logo-wrapper",
+					"href" => napcdoc::documentation_fixLink("index.html")
+				], napcdoc::createHTMLElement("img", [
+					"src" => napcdoc::imageToBase64URI($logo_src),
+					"alt" => "NAPC Software Documentation Logo",
+					"height" => 50
+				]));
+			?>
+		</div>
+
+			<div id="napcdoc-layout-content-header">
+				<?php echo napcdoc::renderFile("content/header", $keys); ?>
+			</div>
+
+			<div id="napcdoc-layout-content" style="position: absolute;">
+				<?php echo napcdoc::renderFile("content/content", $keys); ?>
+			</div>
+		</div>
+
+		<div id="napcdoc-footer"></div>
+
 	</div>
 
+	<style>
+		#napcdoc-layout-background {
+			background: #10101f !important;
+		}
+
+		#napcdoc-layout-content {
+			background-image: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.06));
+			background: #0c0c16;
+		}
+
+		/*
+		#napcdoc-layout-content-header {
+			box-shadow: 0px 4px 14px #090911;
+		}
+
+		#napcdoc-layout-navigation,
+		#napcdoc-layout-navigation-header {
+			box-shadow: 4px 0px 14px #090911;
+		}
+
+		#napcdoc-footer {
+			box-shadow: 0px -4px 14px #090911;
+		}
+		*/
+
+		#napcdoc-layout-content-header,
+		#napcdoc-layout-content,
+		#napcdoc-layout-navigation,
+		#napcdoc-layout-navigation-header,
+		#napcdoc-footer {
+			background: #090911 !important;
+		}
+
+		#napcdoc-layout-content-header,
+		#napcdoc-footer {
+			background: #111119 !important; /* #10101f !important;*/
+			/*background: linear-gradient(56deg, #002912 25%, #001913 67%) !important;*/
+		}
+	</style>
+
+
+	<!--
 	<div id="napcdoc-layout-navigation-header">
 		<?php echo napcdoc::renderFile("navigation/header", $keys); ?>
 	</div>
@@ -118,6 +184,13 @@ return function($keys) {
 	<div id="napcdoc-layout-content">
 		<?php echo napcdoc::renderFile("content/content", $keys); ?>
 	</div>
+	-->
+
+
+
+
+
+
 
 	<div id="napcdoc-layout-mobile-navigation-toggle">
 		<?php

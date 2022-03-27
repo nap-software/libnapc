@@ -2,20 +2,23 @@
 @use "../utils.sass"
 
 #napcdoc-layout-global-search-results
-	width: 360px
-	max-height: calc(100% - 100px)
+	width: 400px
+	//min-height: calc(100% - 100px)
+	height: calc(100% - 100px)
 	position: fixed
 	background: rgba(255, 0, 0, 0)
-	@include utils.backdropFilter(blur(20px))
-	right: 20px
-	top: 50px
+	//@include utils.backdropFilter(blur(20px))
+	background: #111119
+	right: 0px
+	top: 100px
 	z-index: 10
-	border-bottom-left-radius: 20px
-	border-bottom-right-radius: 20px
-	padding-top: 20px
-	border: 1px solid #494a4b
-	box-shadow: 0px 0px 25px #00000045
+	//border-bottom-left-radius: 20px
+	//border-bottom-right-radius: 20px
+	//padding-top: 20px
+	//border: 1px solid #494a4b
+	//box-shadow: 0px 0px 25px #00000045
 	background: rgba(255, 255, 255, .03)
+	background: #111119
 	display: none // flex set via js
 	flex-direction: column
 	overflow-y: scroll
@@ -42,13 +45,14 @@
 		margin-bottom: 5px
 		margin-left: 12px
 		margin-top: 10px
+		color: rgba(255, 255, 255, .2)
 
 	hr
 		width: 100%
 		margin: 6px 0px
 		margin-bottom: 0
 		border: none
-		background: #8786873d
+		background: none //#8786873d
 		height: 2px
 		flex-shrink: 0
 		flex-grow: 0
@@ -58,7 +62,7 @@
 		flex-shrink: 0
 		display: flex
 		align-items: center
-		padding: 5px 8px
+		padding: 5px 20px
 
 		border: 1px solid transparent
 		border-right: none
